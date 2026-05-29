@@ -1,0 +1,8 @@
+# Production-only material (video / Skool / behind-the-build scripts) —
+# working material for James, not part of the public deliverable.
+ship/
+
+# Wrangler / Cloudflare Pages local deploy cache — not part of the deliverable.
+.wrangler/
+
+.DS_Store
