@@ -1,81 +1,83 @@
-# Mayston — a contested-evidence research partner for stroke-rehab CPD
+# Mayston
 
-Mayston was built by James — not a clinician — out of 25+ years of frontline UK community-physiotherapy experience, captured directly from his father — a UK physiotherapist and the project's clinical consultant ([Ships Physiotherapy](https://www.shipsphysio.co.uk/)) — over two recorded calls and turned into the build's problem frame. The two calls are shipped verbatim so you can audit the source: [`research/dad-followup-call-2026-05-27.md`](research/dad-followup-call-2026-05-27.md), with the full problem investigation in [`research/user-profile-investigation.md`](research/user-profile-investigation.md). The whole evidence trail — the schools landscape, the canonical debates, the competitive scan, the clinical-safety reading — lives in [`research/`](research/); start there if you want to know where every claim came from before you read a line of behaviour.
+<!-- mark: video=walkthrough length=mid-form caption="The full walkthrough: setting Mayston up, then one complete debate-to-draft flow" id=mV url=<youtube-pending> source-markers=[m2,m7] capture-action="single mid-form recording covering both: (1) the three-step setup from empty Claude Project to first response, and (2) one full session carrying a contested question from probe through debate to a drafted brief" -->
 
-> Mayston is a contested-epistemology anchor drawn from Margaret Mayston's published 2008 Physiotherapy Research International editorial. We did not seek consent. This is not an impersonation of the living physiotherapist.
+Mayston is an AI research partner for clinical educators preparing stroke-rehabilitation teaching for NHS physiotherapy teams. It helps you interrogate contested clinical evidence before you stand up and present it. It does not write your slides, and it does not make the clinical call — that stays with you.
+
+It isn't an app. There's no site to log into and nothing to install in the usual sense. The product is a folder of files you upload to a Claude Project — a workspace on claude.ai where you hand the AI a set of documents plus standing instructions, and it behaves the way those files describe.
+
+Where it sits is the part worth being clear about. Mayston is upstream of your retrieval tools — Elicit, PubMed, Cochrane and the rest, the services you use to find and screen research papers — not a replacement for them. It helps you decide what to look for and how far to trust what comes back, then points you at the primary literature to confirm it yourself.
+
+![Where Mayston sits: upstream of the retrieval tools, shaping what you search for rather than searching for you](assets/m1.png)
+
+## Setup
+
+Setup is a five-minute job, and the upload is the install.
+
+1. Create a new Claude Project on claude.ai.
+2. Upload the five items from the `mayston/` folder: `identity.md`, `rules.md`, `examples.md`, `profile-template.md`, and the `reference/` folder.
+3. Set the project instruction to: *follow `rules.md` and `identity.md`*.
+
+You should see Mayston introduce itself on your first message — naming what it does and the line it won't cross. If it answers like plain Claude instead, the project instruction didn't take; re-check step 3.
+
+<!-- mark: content-type=verification-gap media=screenshot caption="What a correct setup looks like: Mayston's opening self-introduction" id=m3 capture-action="Screenshot of Mayston's first-message self-introduction in the Claude Project" -->
+
+## Seeing it work
+
+Ask Mayston a contested question — say, whether the Bobath approach (a long-established hands-on treatment school) holds up against current evidence — and the first thing back is a `Mode:` line. That line tells you how it has read your intent (a debate, a lookup, a request to draft) so you can correct it before it runs with the wrong one.
+
+<!-- mark: content-type=verification-gap media=screenshot caption="The Mode: line on a real debate question — the routing is visible and correctable" id=m4 capture-action="Screenshot of a Claude Project exchange showing the Mode: line on a contested-evidence question" -->
+
+Two things run underneath every debate and never announce themselves. The first is GRADE hedging — GRADE is the standard scale for how much confidence the evidence actually licenses, and Mayston attaches that hedge to its claims rather than stating them flat. The second is a reasoning-integrity check that names weak statistical or rhetorical moves when they appear. You don't see these as steps; you see their effect — claims arrive qualified, and shaky reasoning gets called out in place.
+
+![The two always-on layers sitting under any debate turn: GRADE hedging and the reasoning-integrity check](assets/m5.png)
+
+## How it works
+
+Every load-bearing piece carries an ID, so the design can be audited line by line rather than taken on trust. `IDENT-NN` is a frame primitive — what Mayston is and won't do. `RULE-NN` is a named runtime behaviour. `STATE-NN` is a stage in the conversation state machine, and `TRANSITION-NM` is a move between two stages.
+
+The build is layered, and you can read it as one piece:
+
+- **The frame** (`identity.md`, `IDENT-01..07`) sets the envelope: the upstream-of-retrieval positioning, a clinical-safety boundary (no clinical directives, no patient data), the contested-evidence stance, the named identity, the out-of-scope line, a UK source anchor, and a frozen evidence snapshot.
+- **The behaviour** (`rules.md`, `RULE-01..15`) defines how it acts inside that frame — mode routing, position-eliciting, pushback rehearsal, source-verification, brief-structuring, and more.
+- **The knowledge** (`reference/`) holds the UK-anchored substance: the therapeutic schools, the contested debates, a retrieval-routing tree, and a reasoning-integrity catalogue. Rules cite this layer; they don't restate it.
+- **The state** (`profile-template.md`) is the educator's own profile file. You fill it and keep it; Mayston reads it to tailor itself and proposes edits, but never writes it.
+
+A debate follows a fixed trajectory: it probes your intent, elicits the position you currently teach, runs the debate, closes into a structured brief, and optionally drafts takeable prose. Five stages (`STATE-1..5`), nine named transitions between them. Because each transition is named, you can see which stage you're in and why the conversation moved.
+
+![The five-stage state machine and the nine named transitions between stages](assets/m6.png)
+
+## What's in the folder
+
+| Item | What it is |
+|---|---|
+| `identity.md` | The frame — positioning, the clinical-safety boundary, the contested-evidence stance, the named identity, the out-of-scope line, the UK source anchor, and the frozen evidence snapshot. |
+| `rules.md` | The behaviour — fifteen named behaviours, the five-stage state machine, and the nine transitions that join the stages. |
+| `examples.md` | Five worked dialogues showing the frame in action. |
+| `profile-template.md` | The blank educator-profile schema. You own it; Mayston reads it and never writes it. |
+| `reference/` | The UK-anchored knowledge: the therapeutic schools, the contested debates, the retrieval-routing tree, and the reasoning-integrity catalogue — cited, not restated. |
+
+The rest of the repository — the landing page, the judge guide, the writeup, the worked briefing — is there so a stranger can evaluate the build, not to run it.
+
+## The stance
+
+Mayston holds competing schools distinct instead of blending them into one tidy summary. Stroke rehabilitation is genuinely contested — schools like Bobath and constraint-induced movement therapy (training the affected limb by restraining the good one) disagree on mechanism and on evidence — and a tool that smooths that over would mislead you. So it keeps the traditions apart, names who defends each and who profits from it, and leaves the judgement with you.
+
+On safety, the line is firm: words, not clinical decisions. No pharmacology, no surgery, no imaging, no patient data. It is a partner for preparing how you'll teach and defend a position, not a source of clinical directives.
+
+## What it won't do
+
+- Write your slides or make the clinical call.
+- Touch pharmacology, surgery, imaging, or anything patient-identifiable.
+- Hand you a single "best" school — it keeps the contested ones contested.
+- Write to your profile file. It proposes; you apply.
+
+## Evaluating Mayston
+
+If you're here to assess it, `JUDGE_GUIDE.md` carries a set of falsifiable prompts — each one states the behaviour to expect, so you can check the claim against what actually happens. Fire one and you should see the named behaviour appear: the `Mode:` line on an intent, a hedged claim where the evidence is weak, a vested-interest flag on a school that has one.
+
+<!-- mark: content-type=verification-gap media=screenshot caption="A JUDGE_GUIDE prompt fired against Mayston, with the expected behaviour visible in the response" id=m8 capture-action="Screenshot of one JUDGE_GUIDE prompt and Mayston's response, with the expected behaviour (Mode line / hedge / vested-interest flag) showing" -->
 
 ---
 
-## What Mayston is
-
-Mayston is a research partner for **UK contracting clinical educators preparing stroke-rehabilitation CPD briefings for NHS physiotherapy teams**. The educator has to walk into a room of band-6 physios, students, and a tutor-track colleague able to push back on a contested claim — Mayston helps them interrogate the contested evidence *before* the room, never writing the slides and never making the clinical call.
-
-Per IDENT-03, Mayston navigates the therapeutic schools as distinct **traditions** — Bobath, task-specific training, Brunnstrom, and the rest — each with a founder, a core claim, an evidence position, and named defenders and critics. It names which fault line a contested claim sits on, surfaces the asymmetry in how the "for" and "against" sides argue, and holds both layers open (e.g. Bobath-as-intervention vs Bobath-as-framework) rather than declaring a winner the evidence does not support. Where a summariser flattens the schools into one tidy answer, Mayston keeps the tension live. Per IDENT-02 it hedges on GRADE-calibrated certainty tiers and never issues a clinical directive; per IDENT-06 it anchors to UK sources (NICE NG236, the RCP National Clinical Guideline for Stroke, CSP, ACPIN) and geography-flags non-UK guidance.
-
-**The folder is the product.** Mayston runs as a Claude Project context bundle — upload the folder, carry it between contracts. Fork it and it is yours.
-
----
-
-## Quickstart for strangers
-
-One way in, and it is the portable one — load the folder into a Claude Project (≤5 steps, ≤5 min):
-
-1. Open https://claude.ai/projects
-2. Create a project.
-3. Upload 5 items: `identity.md`, `rules.md`, `examples.md`, `profile-template.md` (the blank profile schema), and the entire `reference/` folder.
-4. Set the project instructions to: `Use the uploaded files as your context. Follow rules.md and identity.md exactly.`
-5. Fire a sample prompt from [`JUDGE_GUIDE.md`](JUDGE_GUIDE.md) (e.g. *"Is Bobath worth defending against task-specific training for lower-limb stroke rehab?"*).
-
-That is the whole setup. The five uploaded items *are* the AI-context bundle (see the file map below); everything else in the repo is ship-surface documentation, not behaviour.
-
-**New here, or coming back?** Either works as a first prompt. A newcomer can just ask *"what can you do?"* and Mayston introduces itself, honestly, in five short sections — and it can offer to set you up: say *"set me up"* and Mayston walks you through a few questions, then hands back a filled `my-profile.md` for you to **save and add to the project yourself**. It cannot write or upload that file for you — you save it and add it to project knowledge, and that file (not Mayston's memory) is what carries your profile across sessions. A returning educator can fill in `profile-template.md` (or that `my-profile.md`) directly, add it to the project, and Mayston tailors which debates and evidence it surfaces — and skips the questions it already knows the answer to. Mayston never writes the file — at most it proposes lines for you to paste back — and it never asks for patient information.
-
----
-
-## Adjacent tools — complements, not competitors
-
-Per IDENT-01, Mayston sits **upstream of** the research-retrieval tools, not in competition with them. When the educator needs a specific paper, a systematic-review verdict, an effect size, or a structured-extraction table, Mayston routes them to the right tool — then helps them debate what it returns. Different tools for different moments in the same workflow:
-
-- **Elicit** — structured extraction across many papers.
-- **Consensus** — quick "what does the literature say" verdicts.
-- **Cochrane** — systematic-review certainty.
-- **PubMed** — primary-literature search.
-- **iatroX** — UK-clinician-facing evidence Q&A.
-- **Physiopedia** — physiotherapy-specific reference.
-
-Mayston does not retrieve, rank, or extract papers itself (IDENT-01). It is the thinking layer that sits over those results.
-
----
-
-## Folder portability
-
-Mayston's outputs are files on disk, and the folder travels. The frozen example output lives at [`briefings/team-cardiff-acute/example-bobath-vs-task-specific.md`](briefings/team-cardiff-acute/example-bobath-vs-task-specific.md) — a full worked session-close briefing produced by walking STATE-1 through STATE-4 (per RULE-09), kept on disk as both output evidence and the portability claim made concrete.
-
-The `briefings/team-cardiff-acute/` directory IS the portability claim: `ls` it. Fork the repo and add your own `briefings/team-<X>/` — the folder travels with you between contracts.
-
----
-
-## How it works — file map and cross-links
-
-Mayston is a folder. The behaviour lives in four files (plus a blank profile schema the educator fills in); the rest is the ship surface.
-
-**The AI-context bundle** (upload these five to a Claude Project — Path B above):
-
-| File | Role |
-|------|------|
-| `identity.md` | The frame — IDENT-01..07: who Mayston is, the clinical-safety envelope, the contested-epistemology stance, the UK anchor, and the evidence-snapshot/currency frame. |
-| `rules.md` | The behaviour — RULE-01..15 wrapped by the STATE-1..5 debate machine that makes the runtime trajectory inspectable. |
-| `examples.md` | Five worked dialogues showing the frame in action — debate-to-draft, reasoning-integrity, orientation, a profile-tailored session, and a guided onboarding capture. |
-| `profile-template.md` | The **blank** educator-profile schema. You fill it in and keep it; Mayston reads it to tailor (RULE-14) and proposes paste-back updates at close (RULE-15) — it never writes the file, and never asks for patient data. |
-| `reference/` | The UK-anchored domain knowledge — the schools, the canonical debates, the retrieval-routing tree, the reasoning-integrity catalogue — cited, never restated. A dated 2026-05 snapshot, currency-flagged per RULE-10. |
-
-**The ship surface** (documentation and demos, not behaviour):
-
-- [`JUDGE_GUIDE.md`](JUDGE_GUIDE.md) — falsifiable prompts you can fire to test Mayston against its own claims.
-- [`WRITEUP.md`](WRITEUP.md) — the three-paragraph build writeup.
-- Landing page: https://mayston.pages.dev
-- Repository: https://github.com/JamesMack05/mayston
-- Walkthrough video: __YOUTUBE_LOOM_URL__
-- Behind-the-build video: __YOUTUBE_BEHIND_URL__
-
-The boundary is deliberate: only `identity.md`, `rules.md`, `examples.md`, `profile-template.md`, and `reference/` are the AI's context. Everything else — this README, `JUDGE_GUIDE.md`, `WRITEUP.md`, the landing page, the videos — exists to let a stranger evaluate the build, not to run it.
+Mayston is a competition build, shaped with input from a clinical consultant on the stroke-rehabilitation content. The evidence snapshot is frozen at May 2026; some guidance will have moved since, and the files say so where it matters.

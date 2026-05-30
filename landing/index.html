@@ -5,175 +5,308 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mayston — stroke-rehab CPD prep that holds the debate</title>
   <meta name="description" content="A folder-based research partner for UK contracting clinical educators preparing weekend stroke-rehab CPD briefings.">
+
+  <!-- IBM Plex family — Mono for structure/labels, Sans for prose. James's confirmed code aesthetic, IBM Design Language north-star. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --ink: #1a1f24;
-      --muted: #555f68;
-      --accent: #1f5f8b;
-      --accent-ink: #ffffff;
-      --line: #e2e6ea;
-      --bg: #ffffff;
-      --panel: #f6f8fa;
-      --note: #fff8e6;
-      --note-line: #e6d28a;
-      --max: 760px;
+      /* Canvas + structure — true black, white structure/text (IBM dark theme, pushed to true black). */
+      --bg:        #0a0a0a;
+      --bg-panel:  #121212;
+      --bg-raise:  #181818;
+      --ink:       #f5f5f5;   /* primary text — white */
+      --ink-mute:  #9aa0a6;   /* secondary text — grey, a shade of the structure family */
+      --ink-faint: #6b7178;
+      --line:      #2a2a2a;   /* hairline structure */
+      --line-soft: #1d1d1d;
+
+      /* The one coded colour — yellow. Marks what matters, nothing else. */
+      --accent:    #ffd23f;
+      --accent-dim:#b9952a;
+
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      --max: 1080px;
+      --gutter: clamp(20px, 5vw, 56px);
     }
+
     * { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: var(--sans);
       color: var(--ink);
       background: var(--bg);
-      line-height: 1.55;
+      line-height: 1.6;
       font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+      /* Blueprint atmosphere: a faint grid on true black + a top vignette. Depth, not noise. */
+      background-image:
+        radial-gradient(120% 80% at 50% -10%, rgba(255,210,63,0.06) 0%, rgba(255,210,63,0) 55%),
+        linear-gradient(var(--line-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      background-position: 0 0, 0 0, 0 0;
     }
-    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-    header { padding: 56px 0 28px; }
-    h1 {
-      font-size: clamp(1.7rem, 5vw, 2.5rem);
-      line-height: 1.18;
-      margin: 0 0 18px;
-      letter-spacing: -0.01em;
-    }
-    .subhero {
-      font-size: clamp(1.05rem, 2.6vw, 1.25rem);
-      color: var(--muted);
-      margin: 0 0 28px;
-      max-width: 640px;
-    }
-    .ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 0 0 8px;
-    }
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      padding: 12px 20px;
-      border-radius: 8px;
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+    /* Mono labels — the IBM-technical metadata tag used throughout. */
+    .label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
       font-weight: 600;
-      font-size: 0.98rem;
-      border: 1px solid var(--accent);
-      transition: opacity 0.15s ease;
-    }
-    .btn:hover { opacity: 0.88; }
-    .btn-primary { background: var(--accent); color: var(--accent-ink); }
-    .btn-secondary { background: transparent; color: var(--accent); }
-    .disambig {
-      background: var(--note);
-      border: 1px solid var(--note-line);
-      border-radius: 8px;
-      padding: 16px 18px;
-      margin: 28px 0 0;
-      font-size: 0.95rem;
-      color: #4a4332;
-    }
-    .disambig .label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #8a7a3c;
-      margin: 0 0 6px;
+      color: var(--accent);
     }
-    .disambig p { margin: 0; }
-    section { padding: 36px 0; border-top: 1px solid var(--line); }
-    h2 {
-      font-size: 1.3rem;
-      margin: 0 0 18px;
-      letter-spacing: -0.01em;
+    .label .tick { color: var(--accent-dim); }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(10,10,10,0.82);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
     }
-    ul.does { list-style: none; padding: 0; margin: 0; }
-    ul.does li {
-      position: relative;
-      padding: 0 0 14px 26px;
-      margin: 0;
+    .topbar .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
     }
-    ul.does li::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 9px;
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      background: var(--accent);
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--mono); font-weight: 700; letter-spacing: 0.04em;
+      color: var(--ink); text-decoration: none; font-size: 1.02rem;
     }
-    ul.does li strong { display: block; }
-    .videos { display: grid; gap: 28px; }
-    .video h3 { margin: 0 0 10px; font-size: 1.05rem; }
-    .embed {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      background: var(--panel);
+    .brand .mark {
+      width: 14px; height: 14px; background: var(--accent);
+      display: inline-block; flex: none;
+    }
+    .nav { display: flex; gap: 28px; }
+    .nav a {
+      font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em;
+      color: var(--ink-mute); text-decoration: none; transition: color .15s ease;
+    }
+    .nav a:hover { color: var(--accent); }
+    @media (max-width: 620px) { .nav { display: none; } }
+
+    /* ---------- Hero ---------- */
+    header.hero { padding: clamp(64px, 12vw, 132px) 0 clamp(48px, 8vw, 80px); text-align: center; }
+    .hero .eyebrow { margin: 0 0 26px; }
+    h1 {
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: clamp(2rem, 5.6vw, 3.5rem);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin: 0 auto 24px;
+      max-width: 17ch;
+    }
+    h1 .hl { color: var(--accent); }
+    .subhero {
+      font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+      color: var(--ink-mute);
+      margin: 0 auto 38px;
+      max-width: 62ch;
+    }
+    .ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .btn {
+      font-family: var(--mono);
+      display: inline-flex; align-items: center; gap: 9px;
+      text-decoration: none;
+      padding: 14px 24px;
+      font-weight: 600; font-size: 0.92rem; letter-spacing: 0.02em;
+      border: 1px solid var(--accent);
+      transition: transform .12s ease, background .15s ease, color .15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #0a0a0a; }
+    .btn-primary:hover { background: #ffdc63; }
+    .btn-secondary { background: transparent; color: var(--accent); border-color: var(--line); }
+    .btn-secondary:hover { border-color: var(--accent); }
+    .btn .arrow { font-size: 1.05em; line-height: 0; }
+
+    /* ---------- Identity disambiguation note ---------- */
+    .disambig {
+      max-width: 760px; margin: clamp(40px,7vw,64px) auto 0;
+      background: var(--bg-panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      text-align: left;
     }
-    .embed iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
+    .disambig .label { margin: 0 0 8px; display: block; }
+    .disambig p { margin: 0; font-size: 0.95rem; color: var(--ink-mute); }
+
+    /* ---------- Sections ---------- */
+    section { padding: clamp(56px, 9vw, 96px) 0; border-top: 1px solid var(--line); }
+    .sec-head { text-align: center; margin: 0 0 clamp(36px, 6vw, 56px); }
+    .sec-head .label { display: block; margin: 0 0 12px; }
+    h2 {
+      font-family: var(--mono); font-weight: 600;
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      letter-spacing: -0.01em; margin: 0;
     }
-    footer {
-      padding: 32px 0 56px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.9rem;
+
+    /* What it does — grid of indexed cards with yellow icon-bullets. */
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    @media (max-width: 760px) { .grid3 { grid-template-columns: 1fr; } }
+    .card { background: var(--bg); padding: 32px 28px; }
+    .card .idx {
+      font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
+      color: var(--accent); letter-spacing: 0.1em; display: block; margin: 0 0 18px;
     }
-    footer a { color: var(--accent); }
-    @media (max-width: 480px) {
-      .btn { flex: 1 1 100%; text-align: center; }
+    .card .marker { width: 9px; height: 9px; background: var(--accent); display: inline-block; margin-right: 10px; vertical-align: 1px; }
+    .card h3 { font-family: var(--mono); font-weight: 600; font-size: 1.08rem; margin: 0 0 12px; line-height: 1.35; }
+    .card p { margin: 0; color: var(--ink-mute); font-size: 0.97rem; }
+
+    /* Quickstart strip — the portable way in, mono + numbered. */
+    .start { max-width: 760px; margin: 0 auto; }
+    ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; }
+    ol.steps li {
+      counter-increment: s; position: relative;
+      padding: 16px 0 16px 52px; border-bottom: 1px solid var(--line-soft);
+      color: var(--ink-mute); font-size: 0.98rem;
+    }
+    ol.steps li:last-child { border-bottom: 0; }
+    ol.steps li::before {
+      content: counter(s, decimal-leading-zero);
+      position: absolute; left: 0; top: 16px;
+      font-family: var(--mono); font-weight: 700; font-size: 0.85rem;
+      color: var(--accent);
+    }
+    ol.steps li strong { color: var(--ink); font-weight: 600; }
+    ol.steps code, .start code, p code {
+      font-family: var(--mono); font-size: 0.86em;
+      background: var(--bg-raise); border: 1px solid var(--line);
+      padding: 1px 6px; color: var(--ink); white-space: nowrap;
+    }
+
+    /* Grounding / credibility strip. */
+    .ground { max-width: 820px; margin: 0 auto; text-align: center; }
+    .ground p { color: var(--ink-mute); margin: 0 auto; max-width: 64ch; }
+    .ground a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); }
+    .ground a:hover { border-color: var(--accent); }
+
+    /* Video section (restored when the playlist is live). */
+    .videos { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 760px) { .videos { grid-template-columns: 1fr; } }
+    .video h3 { font-family: var(--mono); font-weight: 600; margin: 0 0 12px; font-size: 1rem; }
+    .embed {
+      position: relative; width: 100%; padding-top: 56.25%;
+      background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden;
+    }
+    .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--line); padding: 48px 0 64px; }
+    footer .wrap { display: grid; gap: 14px; }
+    footer p { margin: 0; color: var(--ink-faint); font-size: 0.88rem; max-width: 78ch; }
+    footer a { color: var(--ink-mute); text-decoration: none; border-bottom: 1px solid var(--line); }
+    footer a:hover { color: var(--accent); border-color: var(--accent-dim); }
+    .foot-links { font-family: var(--mono); font-size: 0.84rem; letter-spacing: 0.03em; }
+    .foot-links a { color: var(--accent); border: 0; }
+
+    /* ---------- Orchestrated page-load: one staggered reveal (CSS-only). ---------- */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+      .d1 { animation-delay: .05s; } .d2 { animation-delay: .15s; }
+      .d3 { animation-delay: .25s; } .d4 { animation-delay: .35s; } .d5 { animation-delay: .45s; }
+      @keyframes rise { to { opacity: 1; transform: translateY(0); } }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
 
-    <header>
-      <h1>Stroke-rehab CPD prep that holds the debate, not the summary.</h1>
-      <p class="subhero">For UK contracting clinical educators preparing weekend stroke-rehab CPD — a folder-based research partner that asks better questions than you would have asked yourself.</p>
+  <div class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="mark"></span>MAYSTON</a>
+      <nav class="nav">
+        <a href="#what">What it does</a>
+        <a href="#start">Quickstart</a>
+        <a href="https://github.com/JamesMack05/mayston">GitHub</a>
+      </nav>
+    </div>
+  </div>
 
-      <div class="ctas">
-        <a class="btn btn-primary" href="https://github.com/JamesMack05/mayston">Get the folder on GitHub</a>
+  <main class="wrap" id="top">
+
+    <header class="hero">
+      <p class="eyebrow label reveal d1"><span class="tick">//</span> Stroke-rehab CPD · Research partner</p>
+      <h1 class="reveal d2">Prep that holds the <span class="hl">debate</span>, not the summary.</h1>
+      <p class="subhero reveal d3">For UK contracting clinical educators preparing weekend stroke-rehab CPD — a folder-based research partner that asks better questions than you would have asked yourself.</p>
+
+      <div class="ctas reveal d4">
+        <a class="btn btn-primary" href="https://github.com/JamesMack05/mayston">Get the folder on GitHub <span class="arrow">→</span></a>
         <!-- PENDING-VIDEOS: restore the walkthrough CTA once the YouTube playlist is live
         <a class="btn btn-secondary" href="__YOUTUBE_PLAYLIST_URL__">Watch the walkthrough</a>
         -->
       </div>
 
-      <aside class="disambig">
-        <span class="label">Identity disambiguation</span>
-        <p>Mayston is a contested-epistemology anchor drawn from Margaret Mayston's published 2008 Physiotherapy Research International editorial. We did not seek consent. This is not an impersonation of the living physiotherapist.</p>
+      <aside class="disambig reveal d5">
+        <span class="label"><span class="tick">//</span> Identity disambiguation</span>
+        <p>Mayston is a contested-epistemology anchor drawn from Margaret Mayston's published 2008 <em>Physiotherapy Research International</em> editorial. We did not seek consent. This is not an impersonation of the living physiotherapist.</p>
       </aside>
     </header>
 
-    <section>
-      <h2>What it does</h2>
-      <ul class="does">
-        <li>
-          <strong>Holds the debate open.</strong>
-          Names which fault line a contested claim sits on — Bobath, task-specific training, Brunnstrom and the rest — and keeps the tension live instead of flattening the schools into one tidy answer.
-        </li>
-        <li>
-          <strong>Asks the questions the room will ask.</strong>
-          Interrogates the evidence with you before the briefing, surfacing the asymmetry in how the "for" and "against" sides argue, so you walk in ready for the pushback.
-        </li>
-        <li>
-          <strong>Stays in its lane.</strong>
-          Anchors to UK sources, hedges on certainty tiers, and never writes your slides or makes the clinical call. The folder is the product — fork it and it is yours.
-        </li>
-      </ul>
-    </section>
+  </main>
 
-    <!-- PENDING-VIDEOS: restore this whole "See it work" section once the Stage-12 videos are uploaded and the YouTube tokens are filled.
-    <section>
-      <h2>See it work</h2>
+  <section id="what">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="tick">//</span> What it does</span>
+        <h2>Three things, and it stays in its lane.</h2>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <span class="idx">01</span>
+          <h3><span class="marker"></span>Holds the debate open.</h3>
+          <p>Names which fault line a contested claim sits on — Bobath, task-specific training, Brunnstrom and the rest — and keeps the tension live instead of flattening the schools into one tidy answer.</p>
+        </div>
+        <div class="card">
+          <span class="idx">02</span>
+          <h3><span class="marker"></span>Asks the questions the room will ask.</h3>
+          <p>Interrogates the evidence with you before the briefing, surfacing the asymmetry in how the "for" and "against" sides argue, so you walk in ready for the pushback.</p>
+        </div>
+        <div class="card">
+          <span class="idx">03</span>
+          <h3><span class="marker"></span>Stays in its lane.</h3>
+          <p>Anchors to UK sources, hedges on certainty tiers, and never writes your slides or makes the clinical call. The folder is the product — fork it and it is yours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="tick">//</span> Quickstart</span>
+        <h2>One way in — load the folder into a Claude Project.</h2>
+      </div>
+      <div class="start">
+        <ol class="steps">
+          <li>Open <code>claude.ai/projects</code> and create a project.</li>
+          <li>Upload five items: <strong>identity.md</strong>, <strong>rules.md</strong>, <strong>examples.md</strong>, <strong>profile-template.md</strong>, and the entire <strong>reference/</strong> folder.</li>
+          <li>Set project instructions to: <em>Use the uploaded files as your context. Follow rules.md and identity.md exactly.</em></li>
+          <li>Fire a sample prompt — e.g. <em>"Is Bobath worth defending against task-specific training for lower-limb stroke rehab?"</em></li>
+          <li><strong>That's the whole setup.</strong> The five items <em>are</em> the context bundle. Carry the folder between contracts; fork it and it is yours.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENDING-VIDEOS: restore this whole "See it work" section once the Stage-12 videos are uploaded and the YouTube tokens are filled.
+  <section id="see">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">// See it work</span>
+        <h2>Two short walkthroughs.</h2>
+      </div>
       <div class="videos">
         <div class="video">
           <h3>Walkthrough — a full debate-mode session</h3>
@@ -188,15 +321,26 @@
           </div>
         </div>
       </div>
-    </section>
-    -->
+    </div>
+  </section>
+  -->
 
-    <footer>
+  <section id="ground">
+    <div class="wrap">
+      <div class="ground">
+        <span class="label" style="display:block; margin:0 0 16px;"><span class="tick">//</span> Where it comes from</span>
+        <p>Built by James — not a clinician — and grounded in 25+ years of frontline UK community-physiotherapy experience from the project's clinical consultant, <a href="https://www.shipsphysio.co.uk/">Ships Physiotherapy</a>. Every claim traces to a shipped source: the schools landscape, the canonical debates, the clinical-safety reading. Mayston anchors to UK guidance — NICE NG236, the RCP National Clinical Guideline for Stroke, CSP, ACPIN.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
       <p>Mayston is a research partner, not a clinical authority. It supports a qualified educator's preparation; it does not issue clinical directives.</p>
       <p>Built by James, grounded in 25+ years of frontline UK community-physiotherapy experience from the project's clinical consultant, <a href="https://www.shipsphysio.co.uk/">Ships Physiotherapy</a>.</p>
-      <p><a href="https://github.com/JamesMack05/mayston">GitHub repo</a><!-- PENDING-VIDEOS: &middot; <a href="__YOUTUBE_PLAYLIST_URL__">YouTube playlist</a> --></p>
-    </footer>
+      <p class="foot-links"><a href="https://github.com/JamesMack05/mayston">GitHub repo →</a><!-- PENDING-VIDEOS: &nbsp;·&nbsp; <a href="__YOUTUBE_PLAYLIST_URL__">YouTube playlist →</a> --></p>
+    </div>
+  </footer>
 
-  </main>
 </body>
 </html>
