@@ -195,6 +195,7 @@
 
     /* Video section (restored when the playlist is live). */
     .videos { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .videos.one { grid-template-columns: 1fr; max-width: 900px; margin: 0 auto; }
     @media (max-width: 760px) { .videos { grid-template-columns: 1fr; } }
     .video h3 { font-family: var(--mono); font-weight: 600; margin: 0 0 12px; font-size: 1rem; }
     .embed {
@@ -229,6 +230,7 @@
       <nav class="nav">
         <a href="#what">What it does</a>
         <a href="#start">Quickstart</a>
+        <a href="#see">Walkthrough</a>
         <a href="https://github.com/JamesMack05/mayston">GitHub</a>
       </nav>
     </div>
@@ -243,9 +245,7 @@
 
       <div class="ctas reveal d4">
         <a class="btn btn-primary" href="https://github.com/JamesMack05/mayston">Get the folder on GitHub <span class="arrow">→</span></a>
-        <!-- PENDING-VIDEOS: restore the walkthrough CTA once the YouTube playlist is live
-        <a class="btn btn-secondary" href="__YOUTUBE_PLAYLIST_URL__">Watch the walkthrough</a>
-        -->
+        <a class="btn btn-secondary" href="#see">Watch the walkthrough <span class="arrow">▶</span></a>
       </div>
 
       <aside class="disambig reveal d5">
@@ -300,30 +300,21 @@
     </div>
   </section>
 
-  <!-- PENDING-VIDEOS: restore this whole "See it work" section once the Stage-12 videos are uploaded and the YouTube tokens are filled.
   <section id="see">
     <div class="wrap">
       <div class="sec-head">
-        <span class="label">// See it work</span>
-        <h2>Two short walkthroughs.</h2>
+        <span class="label"><span class="tick">//</span> See it work</span>
+        <h2>One full walkthrough — setup, then a live debate.</h2>
       </div>
-      <div class="videos">
+      <div class="videos one">
         <div class="video">
-          <h3>Walkthrough — a full debate-mode session</h3>
           <div class="embed">
-            <iframe src="__YOUTUBE_LOOM_URL__" title="Mayston walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-        </div>
-        <div class="video">
-          <h3>Behind the build — how it was made</h3>
-          <div class="embed">
-            <iframe src="__YOUTUBE_BEHIND_URL__" title="Behind the build" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/gzHoSpZPWS0" title="Mayston walkthrough — three-step setup, then a full debate-to-draft session" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </div>
   </section>
-  -->
 
   <section id="ground">
     <div class="wrap">
@@ -338,7 +329,7 @@
     <div class="wrap">
       <p>Mayston is a research partner, not a clinical authority. It supports a qualified educator's preparation; it does not issue clinical directives.</p>
       <p>Built by James, grounded in 25+ years of frontline UK community-physiotherapy experience from the project's clinical consultant, <a href="https://www.shipsphysio.co.uk/">Ships Physiotherapy</a>.</p>
-      <p class="foot-links"><a href="https://github.com/JamesMack05/mayston">GitHub repo →</a><!-- PENDING-VIDEOS: &nbsp;·&nbsp; <a href="__YOUTUBE_PLAYLIST_URL__">YouTube playlist →</a> --></p>
+      <p class="foot-links"><a href="https://github.com/JamesMack05/mayston">GitHub repo →</a>&nbsp;·&nbsp;<a href="https://www.youtube.com/watch?v=gzHoSpZPWS0">YouTube walkthrough →</a></p>
     </div>
   </footer>
 

@@ -1,6 +1,8 @@
 # Mayston
 
-<!-- mark: video=walkthrough length=mid-form caption="The full walkthrough: setting Mayston up, then one complete debate-to-draft flow" id=mV url=<youtube-pending> source-markers=[m2,m7] capture-action="single mid-form recording covering both: (1) the three-step setup from empty Claude Project to first response, and (2) one full session carrying a contested question from probe through debate to a drafted brief" -->
+[![Watch the Mayston walkthrough — three-step setup, then a full debate-to-draft session](https://img.youtube.com/vi/gzHoSpZPWS0/maxresdefault.jpg)](https://www.youtube.com/watch?v=gzHoSpZPWS0)
+
+> **▶ [Watch the walkthrough](https://www.youtube.com/watch?v=gzHoSpZPWS0)** — the three-step setup, then one full session carrying a contested question from probe through debate to a drafted brief.
 
 Mayston is an AI research partner for clinical educators preparing stroke-rehabilitation teaching for NHS physiotherapy teams. It helps you interrogate contested clinical evidence before you stand up and present it. It does not write your slides, and it does not make the clinical call — that stays with you.
 
@@ -19,15 +21,9 @@ Setup is a five-minute job, and the upload is the install.
 3. Set the project instruction to: *follow `rules.md` and `identity.md`*.
 
 You should see Mayston introduce itself on your first message — naming what it does and the line it won't cross. If it answers like plain Claude instead, the project instruction didn't take; re-check step 3.
-
-<!-- mark: content-type=verification-gap media=screenshot caption="What a correct setup looks like: Mayston's opening self-introduction" id=m3 capture-action="Screenshot of Mayston's first-message self-introduction in the Claude Project" -->
-
 ## Seeing it work
 
 Ask Mayston a contested question — say, whether the Bobath approach (a long-established hands-on treatment school) holds up against current evidence — and the first thing back is a `Mode:` line. That line tells you how it has read your intent (a debate, a lookup, a request to draft) so you can correct it before it runs with the wrong one.
-
-<!-- mark: content-type=verification-gap media=screenshot caption="The Mode: line on a real debate question — the routing is visible and correctable" id=m4 capture-action="Screenshot of a Claude Project exchange showing the Mode: line on a contested-evidence question" -->
-
 Two things run underneath every debate and never announce themselves. The first is GRADE hedging — GRADE is the standard scale for how much confidence the evidence actually licenses, and Mayston attaches that hedge to its claims rather than stating them flat. The second is a reasoning-integrity check that names weak statistical or rhetorical moves when they appear. You don't see these as steps; you see their effect — claims arrive qualified, and shaky reasoning gets called out in place.
 
 ![The two always-on layers sitting under any debate turn: GRADE hedging and the reasoning-integrity check](assets/m5.png)
@@ -75,9 +71,6 @@ On safety, the line is firm: words, not clinical decisions. No pharmacology, no 
 ## Evaluating Mayston
 
 If you're here to assess it, `JUDGE_GUIDE.md` carries a set of falsifiable prompts — each one states the behaviour to expect, so you can check the claim against what actually happens. Fire one and you should see the named behaviour appear: the `Mode:` line on an intent, a hedged claim where the evidence is weak, a vested-interest flag on a school that has one.
-
-<!-- mark: content-type=verification-gap media=screenshot caption="A JUDGE_GUIDE prompt fired against Mayston, with the expected behaviour visible in the response" id=m8 capture-action="Screenshot of one JUDGE_GUIDE prompt and Mayston's response, with the expected behaviour (Mode line / hedge / vested-interest flag) showing" -->
-
 ---
 
 Mayston is a competition build, shaped with input from a clinical consultant on the stroke-rehabilitation content. The evidence snapshot is frozen at May 2026; some guidance will have moved since, and the files say so where it matters.
